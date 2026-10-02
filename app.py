@@ -5,7 +5,9 @@ from werkzeug.security import generate_password_hash as gh, check_password_hash 
 
 app = Flask(__name__)
 app.secret_key = "ganti-kunci-rahasia-ini"
-DB, LOAN_DAYS, THRESH = "perpus.db", 7, 0.5
+import os
+DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "perpus.db")
+LOAN_DAYS, THRESH = 7, 0.5
 
 def q(sql, a=(), one=False, commit=False):
     c = sqlite3.connect(DB); c.row_factory = sqlite3.Row
@@ -154,5 +156,13 @@ def reports():
     return render_template("reports.html", tb=tb, tm=tm, al=al)
 
 if __name__ == "__main__":
+    import socket
     init_db()
-    app.run(host="127.0.0.1", port=8000, debug=False)
+    port = 8000
+    while port < 8020:
+        with socket.socket() as s:
+            if s.connect_ex(("127.0.0.1", port)) != 0:
+                break
+        port += 1
+    print(f"\n>>> Buka di browser: http://127.0.0.1:{port}\n", flush=True)
+    app.run(host="127.0.0.1", port=port, debug=False)
