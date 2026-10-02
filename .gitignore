@@ -2,6 +2,3 @@ venv/
 __pycache__/
 *.pyc
 perpus.db
-static/face-api.js
-static/models/*.bin
-static/models/*.json
