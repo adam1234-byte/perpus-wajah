@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Katalog Buku</h2><form><input name="s" placeholder="Cari judul / penulis" value="{{request.args.get('s','')}}"></form>
+<table><tr><th>Judul</th><th>Penulis</th><th>Kategori</th><th>Tersedia</th><th></th></tr>
+{% for b in books %}<tr><td>{{b.title}}</td><td>{{b.author}}</td><td>{{b.category}}</td><td>{{b.free}}/{{b.copies}}</td><td><a class="b" href="/book/{{b.id}}">Detail</a></td></tr>{% else %}<tr><td colspan="5">Belum ada buku</td></tr>{% endfor %}</table></div>{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Login dengan Wajah</h2><video id="v" muted playsinline></video><p id="st"></p><button id="bf">Scan Wajah &amp; Login</button></div>
+<div class="c"><h2>Login Email</h2><form method="post"><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Password" required><button>Login</button> <a href="/register">Registrasi</a></form></div>
+{% endblock %}{% block s %}<script>
+const v=document.getElementById('v'),st=document.getElementById('st');initCam(v,st).catch(e=>st.textContent='Kamera gagal: '+e);
+document.getElementById('bf').onclick=async()=>{st.textContent='Memindai...';const d=await desc(v);if(!d){st.textContent='Wajah tidak terdeteksi';return}const r=await post('/login/face',d);if(r.ok)location='/';else st.textContent=r.msg;};
+</script>{% endblock %}
+

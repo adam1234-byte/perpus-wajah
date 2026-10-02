@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><a href="/">&larr; Kembali</a><h2>{{b.title}}</h2><p>Penulis: {{b.author}} | Kategori: {{b.category}}</p>
+<div class="w">Batas pinjam: {{days}} hari. Denda: 10% dari harga buku (Rp {{'{:,}'.format(b.price)}}) per minggu.</div>
+<h3>Status Eksemplar</h3><table><tr><th>Kode</th><th>Status</th></tr>
+{% for n in range(1,b.copies+1) %}<tr><td>BK-{{b.id}}-C{{n}}</td><td>{{'Dipinjam' if n in used else 'Tersedia'}}</td></tr>{% endfor %}</table></div>{% endblock %}

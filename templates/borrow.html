@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Scan Wajah Peminjam</h2><video id="v" muted playsinline></video><p id="st"></p><button id="bs">Scan Member</button>
+<form method="post" style="margin-top:12px"><input type="hidden" name="user_id" id="uid"><p>Member: <b id="mn">-</b></p>
+<select name="book_id">{% for b in books %}<option value="{{b.id}}">{{b.title}}</option>{% endfor %}</select><button id="go" disabled>Proses Peminjaman</button></form></div>
+{% endblock %}{% block s %}<script>
+const v=document.getElementById('v'),st=document.getElementById('st');initCam(v,st).catch(e=>st.textContent='Kamera gagal: '+e);
+document.getElementById('bs').onclick=async()=>{const d=await desc(v);if(!d){st.textContent='Wajah tidak terdeteksi';return}const r=await post('/admin/scan',d);document.getElementById('mn').textContent=r.name;document.getElementById('uid').value=r.id;document.getElementById('go').disabled=!r.ok;};
+</script>{% endblock %}

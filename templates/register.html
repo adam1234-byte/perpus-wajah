@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Registrasi Member</h2><form method="post"><input name="name" placeholder="Nama" required><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Password" required>
+<video id="v" muted playsinline></video><p id="st"></p><input type="hidden" name="face" id="face"><button type="button" id="bc">Ambil Wajah</button> <button>Daftar</button> <a href="/login">Login</a></form></div>
+{% endblock %}{% block s %}<script>
+const v=document.getElementById('v'),st=document.getElementById('st');initCam(v,st).catch(e=>st.textContent='Kamera gagal: '+e);
+document.getElementById('bc').onclick=async()=>{const d=await desc(v);if(!d){st.textContent='Wajah tidak terdeteksi, coba lagi';return}document.getElementById('face').value=JSON.stringify(d);st.textContent='Wajah tersimpan. Klik Daftar.';};
+</script>{% endblock %}

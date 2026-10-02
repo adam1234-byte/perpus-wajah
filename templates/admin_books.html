@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Tambah Buku</h2><form method="post"><input name="title" placeholder="Judul" required><input name="author" placeholder="Penulis" required><input name="category" placeholder="Kategori" required><input name="copies" type="number" min="1" value="1" required><input name="price" type="number" value="50000" required><button>Tambah</button></form></div>
+<div class="c"><h2>Manajemen Buku</h2><table><tr><th>ID</th><th>Judul</th><th>Penulis</th><th>Kategori</th><th>Eksemplar</th><th>Harga</th></tr>
+{% for b in books %}<tr><td>{{b.id}}</td><td>{{b.title}}</td><td>{{b.author}}</td><td>{{b.category}}</td><td>{{b.copies}}</td><td>{{b.price}}</td></tr>{% endfor %}</table></div>{% endblock %}

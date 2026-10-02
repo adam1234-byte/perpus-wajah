@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Pengembalian Buku</h2><table><tr><th>Member</th><th>Buku</th><th>Kode</th><th>Batas</th><th></th></tr>
+{% for r in rows %}<tr><td>{{r.name}}</td><td>{{r.title}}</td><td>BK-{{r.book_id}}-C{{r.copy_no}}</td><td>{{r.due_date}}</td><td><form method="post"><input type="hidden" name="id" value="{{r.id}}"><button>Kembalikan</button></form></td></tr>{% else %}<tr><td colspan="5">Tidak ada pinjaman aktif</td></tr>{% endfor %}</table></div>{% endblock %}

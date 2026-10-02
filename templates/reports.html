@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Top 5 Buku Paling Laris</h2><table>{% for r in tb %}<tr><td>{{r.title}}</td><td>{{r.n}}x dipinjam</td></tr>{% endfor %}</table></div>
+<div class="c"><h2>Top 5 Member Paling Aktif</h2><table>{% for r in tm %}<tr><td>{{r.name}}</td><td>{{r.email}}</td><td>{{r.n}} transaksi</td></tr>{% endfor %}</table></div>
+<div class="c"><h2>Seluruh Riwayat</h2><table><tr><th>Peminjam</th><th>Buku</th><th>Kode</th><th>Pinjam</th><th>Batas</th><th>Status</th><th>Denda</th></tr>
+{% for r in al %}<tr><td>{{r.name}}</td><td>{{r.title}}</td><td>BK-{{r.book_id}}-C{{r.copy_no}}</td><td>{{r.loan_date}}</td><td>{{r.due_date}}</td><td>{{'Dikembalikan' if r.return_date else 'Sedang Dipinjam'}}</td><td>Rp {{'{:,}'.format(r.fine)}}</td></tr>{% endfor %}</table></div>{% endblock %}
