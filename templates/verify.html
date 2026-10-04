@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block c %}
+<div class="c"><h2>Verifikasi Gmail</h2>
+<p>Kode 6 digit dikirim ke <b>{{email}}</b>. Cek Kotak Masuk, atau folder Spam kalau belum ada. Kode berlaku 10 menit.</p>
+<form method="post"><input type="hidden" name="email" value="{{email}}">
+<input name="code" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="Masukkan 6 digit kode" required>
+<button name="action" value="verify">Verifikasi</button>
+<button name="action" value="resend" formnovalidate style="background:#64748b">Kirim Ulang Kode</button>
+<a href="/register">Salah Gmail? Daftar ulang</a></form></div>
+{% endblock %}

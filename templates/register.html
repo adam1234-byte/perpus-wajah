@@ -1,7 +1,24 @@
 {% extends "base.html" %}{% block c %}
-<div class="c"><h2>Registrasi Member</h2><form method="post"><input name="name" placeholder="Nama" required><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Password" required>
-<video id="v" muted playsinline></video><p id="st"></p><input type="hidden" name="face" id="face"><button type="button" id="bc">Ambil Wajah</button> <button>Daftar</button> <a href="/login">Login</a></form></div>
+<div class="c"><h2>Registrasi Member</h2>
+<p>Daftar tanpa persetujuan admin. Gunakan <b>Gmail asli</b>, kode verifikasi akan dikirim ke Gmail tersebut.</p>
+<form method="post" id="f"><input name="name" placeholder="Nama" required><input name="email" type="email" placeholder="Gmail (contoh: nama@gmail.com)" pattern="[A-Za-z0-9][A-Za-z0-9.]{4,29}@[Gg][Mm][Aa][Ii][Ll]\.[Cc][Oo][Mm]" title="Gunakan alamat Gmail asli, contoh: nama@gmail.com" required><input name="password" type="password" placeholder="Password (minimal 6 karakter)" minlength="6" required>
+<div class="cam"><video id="v" muted playsinline></video><canvas id="c"></canvas></div>
+<p id="st" class="st"></p><p id="msg"></p>
+<input type="hidden" name="face" id="face">
+<button type="button" id="bc">Ambil Wajah (3 foto)</button> <button>Daftar dan Kirim Kode</button> <a href="/login">Login</a></form></div>
 {% endblock %}{% block s %}<script>
-const v=document.getElementById('v'),st=document.getElementById('st');initCam(v,st).catch(e=>st.textContent='Kamera gagal: '+e);
-document.getElementById('bc').onclick=async()=>{const d=await desc(v);if(!d){st.textContent='Wajah tidak terdeteksi, coba lagi';return}document.getElementById('face').value=JSON.stringify(d);st.textContent='Wajah tersimpan. Klik Daftar.';};
+const v=document.getElementById('v'),c=document.getElementById('c'),st=document.getElementById('st'),msg=document.getElementById('msg'),face=document.getElementById('face');
+initCam(v,c,st,null).catch(e=>{st.textContent=camError(e);st.className='st bad';});
+document.getElementById('bc').onclick=async()=>{
+  msg.textContent='Tahan wajah menghadap kamera...';
+  try{
+    const d=await desc(v,3);
+    if(!d){msg.textContent='Gagal: wajah harus terdeteksi terus. Coba lagi.';return;}
+    face.value=JSON.stringify(d);
+    msg.textContent='Wajah tersimpan. Klik Daftar dan Kirim Kode.';
+  }catch(e){msg.textContent='Gagal mengambil wajah, coba lagi.';}
+};
+document.getElementById('f').onsubmit=(e)=>{
+  if(!face.value){e.preventDefault();msg.textContent='Ambil wajah dulu sebelum Daftar.';}
+};
 </script>{% endblock %}
